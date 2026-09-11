@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 interface SafeArticleImageProps
   extends Omit<ImageProps, "src" | "alt" | "onError"> {
   src?: string | null;
+  fallbackSrc?: string | null;
   alt: string;
 }
 
@@ -37,26 +38,33 @@ function isPrivateNetworkImage(src: string): boolean {
 
 export default function SafeArticleImage({
   src,
+  fallbackSrc,
   alt,
   unoptimized,
   ...props
 }: SafeArticleImageProps) {
-  const [failed, setFailed] = useState(false);
+  const [failedSources, setFailedSources] = useState<string[]>([]);
 
   useEffect(() => {
-    setFailed(false);
-  }, [src]);
+    setFailedSources([]);
+  }, [src, fallbackSrc]);
 
-  const useFallback = !src || failed;
-  const resolvedSrc = useFallback ? FALLBACK_IMAGE : src;
+  const primaryAvailable = Boolean(src && !failedSources.includes(src));
+  const parentAvailable = Boolean(fallbackSrc && !failedSources.includes(fallbackSrc));
+  const resolvedSrc = primaryAvailable
+    ? src!
+    : parentAvailable
+      ? fallbackSrc!
+      : FALLBACK_IMAGE;
+  const usePlaceholder = resolvedSrc === FALLBACK_IMAGE;
 
   return (
     <Image
       {...props}
       src={resolvedSrc}
-      alt={useFallback ? "Gambar berita belum tersedia" : alt}
+      alt={usePlaceholder ? "Gambar berita belum tersedia" : alt}
       unoptimized={unoptimized || isPrivateNetworkImage(resolvedSrc)}
-      onError={() => setFailed(true)}
+      onError={() => setFailedSources((current) => [...current, resolvedSrc])}
     />
   );
 }

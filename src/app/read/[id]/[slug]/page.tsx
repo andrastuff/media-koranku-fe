@@ -18,9 +18,25 @@ import ArticlePagination from "@/components/article/ArticlePagination";
 import { Clock, Eye, User, Tag, ChevronRight, FileText } from "lucide-react";
 
 import { NewsArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import type { Article } from "@/lib/types";
 
 interface PageProps {
   params: Promise<{ id: string; slug: string }>;
+}
+
+async function resolveArticleImages(article: Article) {
+  const childImage = article.img_full_url || article.img_thumb_url;
+  const parentId = Number(article.parent || 0);
+  if (parentId <= 0) {
+    return { imageUrl: childImage, parentImageUrl: undefined };
+  }
+
+  const parentArticle = await getNewsDetail(parentId);
+  const parentImageUrl = parentArticle?.img_full_url || parentArticle?.img_thumb_url;
+  return {
+    imageUrl: childImage || parentImageUrl,
+    parentImageUrl: childImage ? parentImageUrl : undefined,
+  };
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
@@ -39,7 +55,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     ? article.isi_artikel.replace(/<[^>]*>/g, " ").replace(/\s+/g, " ").trim().slice(0, 160)
     : "Portal Berita Terkini Perkembangan Politik, Hukum, dan Pembangunan di Provinsi Lampung.";
 
-  const imgUrl = article.img_full_url || article.img_thumb_url;
+  const { imageUrl: imgUrl } = await resolveArticleImages(article);
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://korankuid.com";
   const articleCanonical = `/read/${article.idart}/${article.public_slug || article.slug || slug || "berita"}`;
   const fullArticleUrl = `${siteUrl}${articleCanonical}`;
@@ -101,7 +117,8 @@ export default async function ArticleDetailPage({ params }: PageProps) {
     notFound();
   }
 
-  const [relatedArticles, popularArticles, latestArticles, comments, inlineAds, sidebarAds] = await Promise.all([
+  const [articleImages, relatedArticles, popularArticles, latestArticles, comments, inlineAds, sidebarAds] = await Promise.all([
+    resolveArticleImages(article),
     getRelatedNews(article.idart, 4),
     getPopularNews(5),
     getRecentNews(5),
@@ -110,7 +127,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
     getAds("article-sidebar"),
   ]);
 
-  const imgUrl = article.img_full_url || article.img_thumb_url;
+  const imgUrl = articleImages.imageUrl;
   const tagsList = article.tag ? article.tag.split(",").map((t) => t.trim()).filter(Boolean) : [];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://korankuid.com";
@@ -215,6 +232,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
               <ArticleImageFrame className="w-full aspect-video sm:aspect-[16/10]">
                 <SafeArticleImage
                   src={imgUrl}
+                  fallbackSrc={articleImages.parentImageUrl}
                   alt={article.judul_artikel}
                   fill
                   sizes="(max-width: 1024px) 100vw, 800px"
