@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 180" role="img" aria-labelledby="ad-title ad-desc">
+  <title id="ad-title">Space iklan korankuid</title>
+  <desc id="ad-desc">Placeholder iklan banner horizontal</desc>
+  <defs>
+    <linearGradient id="ad-accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ec4899"/>
+      <stop offset="0.5" stop-color="#fb923c"/>
+      <stop offset="1" stop-color="#f43f5e"/>
+    </linearGradient>
+    <linearGradient id="ad-surface" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#eef3f9"/>
+    </linearGradient>
+  </defs>
+  <rect x="2" y="2" width="1096" height="176" rx="16" fill="url(#ad-surface)" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="14" y="14" width="1072" height="152" rx="12" fill="none" stroke="#94a3b8" stroke-width="1.8" stroke-dasharray="10 10" opacity="0.6"/>
+  
+  <!-- Left/Center Icon and Titles -->
+  <g transform="translate(60, 45)">
+    <circle cx="45" cy="45" r="45" fill="url(#ad-accent)"/>
+    <path d="M22 35h46v8H22zm0 18h32v8H22z" fill="#fff"/>
+    <text x="115" y="42" fill="#052962" font-family="Arial, Helvetica, sans-serif" font-size="34" font-weight="800" letter-spacing="4">SPACE IKLAN</text>
+    <text x="115" y="70" fill="#64748b" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="600" letter-spacing="2">FORMAT BANNER 970 × 250 PX</text>
+  </g>
+
+  <!-- Right CTA Button -->
+  <g transform="translate(780, 63)">
+    <rect x="0" y="0" width="260" height="54" rx="27" fill="#072b61"/>
+    <text x="130" y="34" fill="#ffd700" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Beriklan di korankuid</text>
+  </g>
+</svg>

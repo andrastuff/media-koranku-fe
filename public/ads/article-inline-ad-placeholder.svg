@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 160" role="img" aria-labelledby="title desc">
+  <title id="title">Space iklan dalam artikel korankuid</title>
+  <desc id="desc">Placeholder iklan horizontal sebelum berita terkait</desc>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#052962"/><stop offset="1" stop-color="#0b3d7e"/></linearGradient></defs>
+  <rect x="1" y="1" width="958" height="158" rx="10" fill="url(#bg)" stroke="#28579e" stroke-width="2"/>
+  <rect x="12" y="12" width="936" height="136" rx="7" fill="none" stroke="#6f91bf" stroke-dasharray="7 7" opacity=".6"/>
+  <rect x="34" y="42" width="76" height="76" rx="15" fill="#c91825"/><path d="M55 66h34v8H55zm0 17h24v8H55z" fill="#fff"/>
+  <text x="138" y="75" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="24" font-weight="800" letter-spacing="2">SPACE IKLAN</text>
+  <text x="138" y="101" fill="#b8c7df" font-family="Arial,Helvetica,sans-serif" font-size="15">Banner dalam artikel • 960 × 160</text>
+  <text x="915" y="86" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" text-anchor="end">Beriklan di korankuid</text>
+</svg>
+

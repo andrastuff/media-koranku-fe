@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-labelledby="title desc">
+  <title id="title">Gambar berita belum tersedia</title>
+  <desc id="desc">Placeholder gambar berita korankuid</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="1" stop-color="#e8eef7"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#e73b32"/>
+      <stop offset="1" stop-color="#c82922"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <path d="M0 410 225 245l135 103 92-73 348 225H0Z" fill="#dce5f1"/>
+  <circle cx="664" cy="112" r="55" fill="#d5e0ee"/>
+  <g transform="translate(300 118)">
+    <rect width="200" height="164" rx="20" fill="#fff" stroke="#bccbdd" stroke-width="5"/>
+    <path d="M34 42h132M34 70h82M34 98h132M34 126h104" fill="none" stroke="#052962" stroke-linecap="round" stroke-width="12"/>
+    <rect x="139" y="64" width="27" height="34" rx="5" fill="url(#accent)"/>
+  </g>
+  <text x="400" y="340" fill="#052962" font-family="Arial, Helvetica, sans-serif" font-size="27" font-weight="700" text-anchor="middle">GAMBAR BELUM TERSEDIA</text>
+  <text x="400" y="378" fill="#6b7c93" font-family="Arial, Helvetica, sans-serif" font-size="21" text-anchor="middle">koranku<tspan fill="#d62f27" font-weight="700">id</tspan></text>
+</svg>

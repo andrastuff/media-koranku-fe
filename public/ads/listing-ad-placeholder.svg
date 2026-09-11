@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 160" role="img" aria-labelledby="title desc">
+  <title id="title">Space iklan halaman daftar korankuid</title>
+  <desc id="desc">Placeholder banner iklan horizontal di atas filter</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f8fafc"/><stop offset="1" stop-color="#edf2f7"/></linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#052962"/><stop offset="1" stop-color="#0b3d7e"/></linearGradient>
+  </defs>
+  <rect x="1" y="1" width="1278" height="158" rx="10" fill="url(#bg)" stroke="#cbd5e1" stroke-width="2"/>
+  <rect x="12" y="12" width="1256" height="136" rx="7" fill="none" stroke="#94a3b8" stroke-dasharray="7 7" opacity=".55"/>
+  <rect x="34" y="42" width="76" height="76" rx="15" fill="url(#accent)"/>
+  <path d="M55 66h34v8H55zm0 17h24v8H55z" fill="#fff"/>
+  <text x="138" y="75" fill="#052962" font-family="Arial,Helvetica,sans-serif" font-size="25" font-weight="800" letter-spacing="2">SPACE IKLAN</text>
+  <text x="138" y="101" fill="#64748b" font-family="Arial,Helvetica,sans-serif" font-size="15">Banner halaman daftar • 1280 × 160</text>
+  <rect x="1051" y="57" width="180" height="46" rx="23" fill="#c91825"/>
+  <text x="1141" y="86" fill="#fff" font-family="Arial,Helvetica,sans-serif" font-size="14" font-weight="700" text-anchor="middle">Beriklan di korankuid</text>
+</svg>

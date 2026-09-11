@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="18 0 470 132" role="img" aria-labelledby="logo-title logo-desc">
+  <title id="logo-title">korankuid</title>
+  <desc id="logo-desc">Logo korankuid untuk latar terang</desc>
+  <defs>
+    <linearGradient id="korankuid-accent" gradientUnits="userSpaceOnUse" x1="400" y1="28" x2="490" y2="108">
+      <stop offset="0" stop-color="#ad1764"/>
+      <stop offset="0.52" stop-color="#f06423"/>
+      <stop offset="1" stop-color="#ee3345"/>
+    </linearGradient>
+  </defs>
+  <text x="14" y="101" fill="#17479e" font-family="Arial Black, Arial, Helvetica, sans-serif" font-size="96" font-weight="900" letter-spacing="-7"><tspan>koranku</tspan><tspan fill="url(#korankuid-accent)">id</tspan></text>
+</svg>
