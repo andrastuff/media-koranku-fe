@@ -69,6 +69,21 @@ body {
   to { transform: translateX(340%); }
 }
 
+@keyframes hero-slide-enter {
+  from {
+    opacity: 0.35;
+    transform: translateX(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hero-slide-enter {
+  animation: hero-slide-enter 320ms ease-out both;
+}
+
 /* Accessible, CSS-driven ticker for secondary headline stories. */
 .headline-marquee {
   overflow: hidden;
@@ -239,6 +254,10 @@ body {
     width: 100%;
     animation: none;
     transform: none;
+  }
+
+  .hero-slide-enter {
+    animation: none;
   }
 }
 

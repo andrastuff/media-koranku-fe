@@ -1,6 +1,6 @@
 import React from "react";
 import { getAds, getHomeData, getRegions, getVideos } from "@/lib/api";
-import HeroSection from "@/components/sections/HeroSection";
+import HeroCarouselSection from "@/components/sections/HeroCarouselSection";
 import SentilanSection from "@/components/sections/SentilanSection";
 import RubrikFeedSection from "@/components/sections/RubrikFeedSection";
 import DaerahSection from "@/components/sections/DaerahSection";
@@ -41,9 +41,9 @@ export default async function HomePage() {
   return (
     <div className="space-y-6 sm:space-y-7">
       {/* 1. HERO LEAD SECTION (1 Grid Lead Story on Top, 2 Grid Secondary Below + 5 Terpopuler) */}
-      <HeroSection
+      <HeroCarouselSection
         headlines={headlines}
-        hotnews={hotnews}
+        featuredNews={hotnews}
         popular={popular}
         sidebarAd={sidebarAds[0]}
       />

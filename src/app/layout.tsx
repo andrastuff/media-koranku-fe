@@ -3,7 +3,7 @@ import { Playfair_Display, Inter } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
-import { getAds, getHeadlines, getSiteMeta, getTags } from "@/lib/api";
+import { getAds, getSiteMeta, getTags } from "@/lib/api";
 import { WebsiteAndOrgJsonLd } from "@/components/seo/JsonLd";
 import FloatingSideAds from "@/components/ads/FloatingSideAds";
 import NavigationProgress from "@/components/ui/NavigationProgress";
@@ -94,12 +94,11 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [siteMeta, headerAds, floatingAds, focusTags, headlines] = await Promise.all([
+  const [siteMeta, headerAds, floatingAds, focusTags] = await Promise.all([
     getSiteMeta(),
     getAds("header"),
     getAds("floating-left,floating-right"),
     getTags(),
-    getHeadlines(5),
   ]);
   const floatingLeftAd = floatingAds.find((ad) => ad.posisi === "floating-left");
   const floatingRightAd = floatingAds.find((ad) => ad.posisi === "floating-right");
@@ -122,7 +121,6 @@ export default async function RootLayout({
           logoUrl={siteMeta?.logo_url}
           headerAd={headerAds[0]}
           focusTags={focusTags}
-          marqueeHeadlines={headlines.slice(3, 5)}
         />
         <FloatingSideAds leftAd={floatingLeftAd} rightAd={floatingRightAd} />
         <main id="main-content" className="site-shell flex-1 pt-6 pb-2">
