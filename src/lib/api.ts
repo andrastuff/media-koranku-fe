@@ -98,6 +98,10 @@ async function fetchAPI<T>(
   return null;
 }
 
+function parentArticles(articles: Article[] | null | undefined): Article[] {
+  return (articles || []).filter((article) => Number(article.parent || 0) === 0);
+}
+
 // Global & Layout
 export async function getSiteMeta(): Promise<SiteMeta | null> {
   const meta = await fetchAPI<SiteMeta>("/meta");
@@ -133,21 +137,38 @@ export async function getOnlineStats(): Promise<{ online_users: number } | null>
 
 // Home & News
 export async function getHomeData(): Promise<HomeData | null> {
-  return fetchAPI<HomeData>("/home");
+  const data = await fetchAPI<HomeData>("/home");
+  if (!data) return null;
+
+  return {
+    ...data,
+    headlines: parentArticles(data.headlines),
+    hotnews: parentArticles(data.hotnews),
+    daerah: parentArticles(data.daerah),
+    popular: parentArticles(data.popular),
+    recent: parentArticles(data.recent),
+    categories_feed: Object.fromEntries(
+      Object.entries(data.categories_feed || {}).map(([category, articles]) => [
+        category,
+        parentArticles(articles),
+      ])
+    ),
+  };
 }
 
 export async function getHeadlines(limit = 5): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/headlines?limit=${limit}`);
-  return res || [];
+  return parentArticles(res);
 }
 
 export async function getHotnews(limit = 5): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/hotnews?limit=${limit}`);
-  return res || [];
+  return parentArticles(res);
 }
 
 export async function getVideos(): Promise<{ featured_youtube: AdItem[]; video_articles: Article[] } | null> {
-  return fetchAPI<{ featured_youtube: AdItem[]; video_articles: Article[] }>("/news/videos");
+  const data = await fetchAPI<{ featured_youtube: AdItem[]; video_articles: Article[] }>("/news/videos");
+  return data ? { ...data, video_articles: parentArticles(data.video_articles) } : null;
 }
 
 export async function getNewsList(params: {
@@ -167,24 +188,29 @@ export async function getNewsList(params: {
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
 }
 
 export async function getNewsDetail(idart: string | number): Promise<Article | null> {
-  return fetchAPI<Article>(`/news/detail/${idart}`, { next: { revalidate: 120 } });
+  const article = await fetchAPI<Article>(`/news/detail/${idart}`, { next: { revalidate: 120 } });
+  if (!article) return null;
+
+  // Continuation parts/pages must remain available on the read page. Only the
+  // related-news list is sanitized here.
+  return { ...article, related: parentArticles(article.related) };
 }
 
 export async function getRelatedNews(idart: string | number, limit = 5): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/${idart}/related?limit=${limit}`);
-  return res || [];
+  return parentArticles(res);
 }
 
 export async function getPopularNews(limit = 6): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/popular?limit=${limit}`);
-  return res || [];
+  return parentArticles(res);
 }
 
 export async function getPopularNewsList(params: {
@@ -205,7 +231,7 @@ export async function getPopularNewsList(params: {
     });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
@@ -213,7 +239,7 @@ export async function getPopularNewsList(params: {
 
 export async function getRecentNews(limit = 6): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/recent?limit=${limit}`);
-  return res || [];
+  return parentArticles(res);
 }
 
 export async function getRecentNewsList(params: {
@@ -231,7 +257,7 @@ export async function getRecentNewsList(params: {
     const res = await fetch(await buildAPIUrl(`/news/recent?${query.toString()}`), { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
@@ -246,7 +272,7 @@ export async function searchNews(keyword: string, page = 1, limit = 10, filters:
     const res = await fetch(url, { cache: "no-store" });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
@@ -268,7 +294,7 @@ export async function getCategoryNews(
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
@@ -289,7 +315,7 @@ export async function getTagNews(
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
@@ -310,7 +336,7 @@ export async function getRegionNews(
     const res = await fetch(url, { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: json.data || [], pagination: json.pagination };
+    return { data: parentArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
