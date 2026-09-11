@@ -6,6 +6,8 @@ import Footer from "@/components/footer/Footer";
 import { getAds, getHeadlines, getSiteMeta, getTags } from "@/lib/api";
 import { WebsiteAndOrgJsonLd } from "@/components/seo/JsonLd";
 import FloatingSideAds from "@/components/ads/FloatingSideAds";
+import NavigationProgress from "@/components/ui/NavigationProgress";
+import { Suspense } from "react";
 
 export const dynamic = "force-dynamic";
 
@@ -108,6 +110,9 @@ export default async function RootLayout({
       className={`${playfair.variable} ${inter.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#fcfcfc] text-gray-900 font-sans">
+        <Suspense fallback={null}>
+          <NavigationProgress />
+        </Suspense>
         <WebsiteAndOrgJsonLd
           siteUrl={siteUrl}
           siteName="korankuid"

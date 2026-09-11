@@ -178,8 +178,8 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </h1>
 
         {/* Byline and Metadata Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-4 py-3 border-y border-gray-200 text-xs text-gray-600">
-          <div className="flex items-center space-x-4">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-y border-gray-200 py-3 text-xs text-gray-600 sm:gap-4">
+          <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-4">
             <span className="flex items-center space-x-1.5 font-bold text-gray-900">
               <User className="w-3.5 h-3.5 text-[#052962]" />
               <span>Wartawan: {article.wartawan || "Redaksi koranku.id"}</span>

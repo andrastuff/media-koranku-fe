@@ -103,7 +103,7 @@ export default function CommentBox({
       )}
 
       {/* Form Submit Comment */}
-      <div className="bg-white border border-[#dcdcdc] p-6 rounded-xs shadow-xs">
+      <div className="rounded-xs border border-[#dcdcdc] bg-white p-4 shadow-xs sm:p-6">
         <h4 className="font-serif text-lg font-bold text-gray-900 mb-4">
           Tulis Komentar Anda
         </h4>

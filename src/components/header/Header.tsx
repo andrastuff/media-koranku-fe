@@ -139,7 +139,7 @@ export default function Header({
             <BrandLogo
               src={logoUrl}
               priority
-              className={logoUrl ? "h-28 w-auto md:h-32" : "h-auto w-64 sm:w-80 md:w-88"}
+              className={logoUrl ? "h-20 w-auto sm:h-24 md:h-32" : "h-auto w-52 sm:w-72 md:w-88"}
             />
           </Link>
         </div>

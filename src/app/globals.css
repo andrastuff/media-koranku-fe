@@ -28,8 +28,45 @@ body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-sans);
+  overflow-x: clip;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* Global route-change indicator, kept above the sticky site header. */
+.navigation-progress {
+  position: fixed;
+  inset: 0 0 auto;
+  z-index: 100;
+  height: 3px;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+
+.navigation-progress::after {
+  content: "";
+  display: block;
+  width: 42%;
+  height: 100%;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, #c91825, #f25b45, #c91825);
+  box-shadow: 0 0 10px rgb(201 24 37 / 0.55);
+  transform: translateX(-110%);
+}
+
+.navigation-progress--active {
+  opacity: 1;
+}
+
+.navigation-progress--active::after {
+  animation: navigation-progress-slide 1.05s ease-in-out infinite;
+}
+
+@keyframes navigation-progress-slide {
+  from { transform: translateX(-110%); }
+  to { transform: translateX(340%); }
 }
 
 /* Accessible, CSS-driven ticker for secondary headline stories. */
@@ -136,8 +173,9 @@ body {
 
 .article-content {
   color: #2b2b2b;
-  font-size: 1.125rem; /* 18px */
+  font-size: 1rem;
   line-height: 1.5;
+  overflow-wrap: anywhere;
 }
 
 .article-content p {
@@ -180,10 +218,28 @@ body {
   max-width: 100%;
   aspect-ratio: 16 / 9;
   height: auto !important;
-  min-height: 240px;
+  min-height: 180px;
   margin: 1.75rem 0;
   border-radius: 0.375rem;
   border: none;
+}
+
+@media (min-width: 40rem) {
+  .article-content {
+    font-size: 1.125rem;
+  }
+
+  .article-content iframe {
+    min-height: 240px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigation-progress--active::after {
+    width: 100%;
+    animation: none;
+    transform: none;
+  }
 }
 
 /* Responsive Table container */

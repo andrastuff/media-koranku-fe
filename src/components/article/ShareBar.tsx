@@ -46,8 +46,8 @@ export default function ShareBar({ title, url }: ShareBarProps) {
   };
 
   return (
-    <div className="flex items-center space-x-2 my-4 py-3 border-y border-gray-100">
-      <span className="text-xs font-bold uppercase tracking-wider text-gray-500 mr-2">
+    <div className="my-4 flex flex-wrap items-center gap-2 border-y border-gray-100 py-3">
+      <span className="mr-1 text-[11px] font-bold uppercase tracking-wider text-gray-500 sm:mr-2 sm:text-xs">
         Bagikan:
       </span>
 
@@ -88,7 +88,7 @@ export default function ShareBar({ title, url }: ShareBarProps) {
       {/* Copy URL */}
       <button
         onClick={handleCopy}
-        className="flex items-center space-x-1 px-3 py-1.5 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors text-xs font-semibold"
+        className="flex min-h-8 items-center space-x-1 rounded-full bg-gray-100 px-2.5 py-1.5 text-[11px] font-semibold text-gray-700 transition-colors hover:bg-gray-200 sm:px-3 sm:text-xs"
         title="Salin Link"
       >
         {copied ? (
