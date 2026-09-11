@@ -45,6 +45,14 @@ async function buildAPIUrl(endpoint: string): Promise<string> {
   return `${base}${endpoint.startsWith("/") ? endpoint : `/${endpoint}`}`;
 }
 
+async function getAPICandidateUrls(endpoint: string): Promise<string[]> {
+  const suffix = endpoint.startsWith("/") ? endpoint : `/${endpoint}`;
+  const internalBase = await getAPIBaseUrl();
+  const publicBase = await getPublicAPIBaseUrl();
+
+  return [...new Set([internalBase, publicBase])].map((base) => `${base}${suffix}`);
+}
+
 function resolveBackendAssetUrl(assetPath: string, apiBaseUrl: string): string {
   const backendRoot = apiBaseUrl.replace(/\/(?:index\.php\/)?api\/v1\/?$/, "");
   return `${backendRoot}/${assetPath.replace(/^\/+/, "")}`;
@@ -54,29 +62,40 @@ async function fetchAPI<T>(
   endpoint: string,
   options: RequestInit = {}
 ): Promise<T | null> {
+  let lastError: unknown;
+
   try {
-    const url = await buildAPIUrl(endpoint);
-    const res = await fetch(url, {
-      ...options,
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        ...options.headers,
-      },
-      next: { revalidate: 60, ...options.next },
-    });
+    const urls = await getAPICandidateUrls(endpoint);
 
-    if (!res.ok) {
-      console.warn(`[API] Failed ${res.status} on ${url}`);
-      return null;
+    for (const url of urls) {
+      try {
+        const res = await fetch(url, {
+          ...options,
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            ...options.headers,
+          },
+          next: { revalidate: 60, ...options.next },
+        });
+
+        if (!res.ok) {
+          lastError = new Error(`HTTP ${res.status} from ${url}`);
+          continue;
+        }
+
+        const json: ApiResponse<T> = await res.json();
+        return json.data;
+      } catch (err) {
+        lastError = err;
+      }
     }
-
-    const json: ApiResponse<T> = await res.json();
-    return json.data;
   } catch (err) {
-    console.error(`[API] Error fetching ${endpoint}:`, err);
-    return null;
+    lastError = err;
   }
+
+  console.error(`[API] All endpoints failed for ${endpoint}:`, lastError);
+  return null;
 }
 
 // Global & Layout
