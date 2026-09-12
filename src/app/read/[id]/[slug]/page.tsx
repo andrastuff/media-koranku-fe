@@ -178,7 +178,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
       {/* 2. ARTICLE HEADER */}
       <header
-        className={`mb-6 ${isSentilan ? "relative overflow-hidden rounded-lg border border-[#efd9c5] bg-[#fff8ed] px-4 py-5 shadow-[0_8px_28px_rgba(111,62,26,0.07)] sm:px-7 sm:py-7" : ""}`}
+        className={`mb-6 ${isSentilan ? "relative overflow-hidden rounded-lg bg-[#fff8ed] px-4 py-5 shadow-[0_8px_28px_rgba(111,62,26,0.06)] ring-1 ring-[#f2dfcc] sm:px-7 sm:py-7" : ""}`}
         style={isSentilan ? { backgroundImage: "url('/brand/sentilan-editorial-pattern.svg')", backgroundPosition: "right top", backgroundRepeat: "no-repeat", backgroundSize: "auto 100%" } : undefined}
       >
         {/* Category & Region Kicker */}
@@ -200,7 +200,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </h1>
 
         {/* Byline and Metadata Bar */}
-        <div className="flex flex-wrap items-center justify-between gap-3 border-y border-gray-200 py-3 text-xs text-gray-600 sm:gap-4">
+        <div className={`flex flex-wrap items-center justify-between gap-3 border-y py-3 text-xs text-gray-600 sm:gap-4 ${isSentilan ? "border-[#ead8c5]" : "border-gray-200"}`}>
           <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-2 sm:gap-x-4">
             <span className="flex items-center space-x-1.5 font-bold text-gray-900">
               <User className="w-3.5 h-3.5 text-[#052962]" />
@@ -253,7 +253,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
           {/* ARTICLE CONTENT (WYSIWYG Compatibility Container) */}
           <div
-              className={`article-content prose prose-lg max-w-none text-gray-800 ${isSentilan ? "rounded-lg border border-[#f0dfcf] bg-[#fffbf4] px-4 py-5 font-serif shadow-[inset_4px_0_0_#c74600] sm:px-7 sm:py-6" : "font-sans"}`}
+              className={`article-content prose prose-lg max-w-none text-gray-800 ${isSentilan ? "rounded-lg bg-[#fffbf4] px-4 py-5 font-serif shadow-[inset_4px_0_0_#d97843,0_6px_22px_rgba(111,62,26,0.05)] sm:px-7 sm:py-6" : "font-sans"}`}
             dangerouslySetInnerHTML={{ __html: article.isi_artikel || "" }}
           />
 
