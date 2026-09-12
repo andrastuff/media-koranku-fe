@@ -72,10 +72,10 @@ export default function SectionHeader({
           {href && (
             <Link
               href={href}
-              aria-label={`Lihat semua berita ${title}`}
-              className="group inline-flex h-9 items-center justify-center gap-1.5 rounded-full border border-slate-200 bg-white px-2.5 text-slate-600 shadow-xs transition-all hover:border-slate-300 hover:text-slate-950 sm:px-3"
+              aria-label={`Lihat berita ${title} selengkapnya`}
+              className="group inline-flex h-9 items-center justify-center gap-1.5 rounded-sm border border-slate-200 bg-white px-2.5 text-slate-600 shadow-xs transition-all hover:border-slate-300 hover:text-slate-950 sm:px-3"
             >
-              <span className="hidden sm:inline">Semua</span>
+              <span className="hidden sm:inline">Selengkapnya</span>
               <ArrowUpRight className="h-3.5 w-3.5 transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
             </Link>
           )}

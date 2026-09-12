@@ -73,8 +73,36 @@ export default function SentilanSection({
     container.scrollBy({ left: scrollAmount, behavior: "smooth" });
   };
 
-  if (displayArticles.length === 0) return null;
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setIsPaused(true);
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    setIsPaused(false);
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchStartX - touchEndX;
+    const deltaY = touchStartY !== null ? Math.abs(touchStartY - touchEndY) : 0;
+
+    // Minimum swipe threshold 35px, and ensure horizontal intent
+    if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > deltaY) {
+      if (deltaX > 0) {
+        handleScroll("right"); // Swiped left -> advance forward
+      } else {
+        handleScroll("left"); // Swiped right -> go back
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
+  if (displayArticles.length === 0) return null;
 
   return (
     <section className="my-6 bg-[#fef6eb] border border-[#f0ded0] rounded-xs p-4 sm:p-5 shadow-2xs">
@@ -86,17 +114,17 @@ export default function SentilanSection({
         accentColor="#c74600"
         className="mb-4"
         rightElement={
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <Link
               href="/sentilan"
               className="text-xs font-bold uppercase tracking-wider text-[#c74600] hover:underline flex items-center gap-1"
             >
-              <span>Lihat Semua</span>
+              <span>Selengkapnya</span>
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
 
-            {/* Slider Navigation Buttons */}
-            <div className="hidden sm:flex items-center gap-1.5 ml-2 pl-3 border-l border-[#f0ded0]">
+            {/* Slider Navigation Buttons (Visible on mobile & desktop) */}
+            <div className="flex items-center gap-1.5 ml-1 pl-2 sm:ml-2 sm:pl-3 border-l border-[#f0ded0]">
               <button
                 type="button"
                 onClick={() => handleScroll("left")}
@@ -120,17 +148,17 @@ export default function SentilanSection({
         }
       />
 
-      {/* Interactive Horizontal Slider with Hover/Touch Pause */}
+      {/* Interactive Horizontal Slider with Touch Swipe & Pause */}
       <div
-        className="relative group/slider"
+        className="relative group/slider select-none"
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
-        onTouchStart={() => setIsPaused(true)}
-        onTouchEnd={() => setIsPaused(false)}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         <div
           ref={scrollRef}
-          className="flex gap-4 overflow-x-auto scroll-smooth snap-x snap-mandatory scrollbar-none pb-2 pt-1 -mx-1 px-1 items-stretch"
+          className="flex gap-4 overflow-x-auto touch-pan-x overscroll-x-contain snap-x snap-mandatory scrollbar-none pb-2 pt-1 -mx-1 px-1 items-stretch"
         >
           {displayArticles.map((article) => (
             <div
@@ -145,4 +173,3 @@ export default function SentilanSection({
     </section>
   );
 }
-
