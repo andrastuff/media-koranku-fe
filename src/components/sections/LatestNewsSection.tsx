@@ -18,7 +18,6 @@ export default function LatestNewsSection({ articles }: LatestNewsSectionProps) 
         title="Berita Terbaru"
         href="/terbaru"
         kicker="Baru dari redaksi"
-        subtitle="Kabar terkini yang baru diterbitkan redaksi koranku.id"
         accentColor="#052962"
         className="mb-3"
       />
