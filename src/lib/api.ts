@@ -102,6 +102,13 @@ function parentArticles(articles: Article[] | null | undefined): Article[] {
   return (articles || []).filter((article) => Number(article.parent || 0) === 0);
 }
 
+function latestArticles(articles: Article[] | null | undefined): Article[] {
+  return parentArticles(articles).filter((article) => {
+    const category = article.kategori?.trim().toLowerCase();
+    return category !== "sentilan" && category !== "nyekhita";
+  });
+}
+
 // Global & Layout
 export async function getSiteMeta(): Promise<SiteMeta | null> {
   const meta = await fetchAPI<SiteMeta>("/meta");
@@ -146,7 +153,7 @@ export async function getHomeData(): Promise<HomeData | null> {
     hotnews: parentArticles(data.hotnews),
     daerah: parentArticles(data.daerah),
     popular: parentArticles(data.popular),
-    recent: parentArticles(data.recent),
+    recent: latestArticles(data.recent),
     categories_feed: Object.fromEntries(
       Object.entries(data.categories_feed || {}).map(([category, articles]) => [
         category,
@@ -239,7 +246,7 @@ export async function getPopularNewsList(params: {
 
 export async function getRecentNews(limit = 6): Promise<Article[]> {
   const res = await fetchAPI<Article[]>(`/news/recent?limit=${limit}`);
-  return parentArticles(res);
+  return latestArticles(res);
 }
 
 export async function getRecentNewsList(params: {
@@ -257,7 +264,7 @@ export async function getRecentNewsList(params: {
     const res = await fetch(await buildAPIUrl(`/news/recent?${query.toString()}`), { next: { revalidate: 60 } });
     if (!res.ok) return { data: [] };
     const json: ApiResponse<Article[]> = await res.json();
-    return { data: parentArticles(json.data), pagination: json.pagination };
+    return { data: latestArticles(json.data), pagination: json.pagination };
   } catch {
     return { data: [] };
   }
