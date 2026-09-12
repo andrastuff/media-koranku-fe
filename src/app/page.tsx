@@ -5,6 +5,7 @@ import SentilanSection from "@/components/sections/SentilanSection";
 import RubrikFeedSection from "@/components/sections/RubrikFeedSection";
 import DaerahSection from "@/components/sections/DaerahSection";
 import VideoGallerySection from "@/components/sections/VideoGallerySection";
+import LatestNewsSection from "@/components/sections/LatestNewsSection";
 import AdBanner from "@/components/ads/AdBanner";
 
 export const revalidate = 60; // ISR 60 seconds
@@ -22,6 +23,7 @@ export default async function HomePage() {
   const headlines = homeData?.headlines || [];
   const hotnews = homeData?.hotnews || [];
   const popular = homeData?.popular || [];
+  const recent = homeData?.recent || [];
   const categoriesFeed = homeData?.categories_feed || {};
   const daerahNews = homeData?.daerah || [];
 
@@ -47,6 +49,9 @@ export default async function HomePage() {
         popular={popular}
         sidebarAd={sidebarAds[0]}
       />
+
+      {/* Latest articles: compact, scan-friendly list without hiding items in a slider. */}
+      <LatestNewsSection articles={recent} />
 
       {/* 2. SENTILAN & OPINI SHOWCASE (Warm Paper Tint `#fef6eb`) */}
       <SentilanSection
