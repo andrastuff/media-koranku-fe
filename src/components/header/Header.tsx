@@ -129,22 +129,22 @@ export default function Header({
 
       {/* 2. BRAND & AD MASTHEAD */}
       <div className="bg-[#f3f7fb] bg-[url('/brand/masthead-editorial-pattern.svg')] bg-cover bg-center">
-      <div className="site-shell grid grid-cols-1 items-center gap-8 py-2 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)]">
-        <div className="text-center lg:text-left">
+      <div className="site-shell grid grid-cols-[minmax(72px,96px)_minmax(0,1fr)] items-center gap-3 py-2 sm:grid-cols-[minmax(110px,150px)_minmax(0,1fr)] sm:gap-5 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)] lg:gap-8">
+        <div className="flex min-w-0 justify-start">
           <Link
             href="/"
             aria-label="korankuid - Beranda"
-            className="inline-block transition-opacity hover:opacity-90"
+            className="inline-flex max-w-full transition-opacity hover:opacity-90"
           >
             <BrandLogo
               src={logoUrl}
               priority
-              className={logoUrl ? "h-20 w-auto sm:h-24 md:h-32" : "h-auto w-52 sm:w-72 md:w-88"}
+              className={logoUrl ? "h-16 max-w-full w-auto sm:h-24 md:h-28 lg:h-32" : "h-auto max-w-full w-24 sm:w-36 lg:w-88"}
             />
           </Link>
         </div>
 
-        <div className="hidden w-full justify-self-end lg:block">
+        <div className="min-w-0 w-full justify-self-end overflow-hidden rounded-sm">
           <HeaderAd ad={headerAd} />
         </div>
       </div>
