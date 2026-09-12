@@ -129,7 +129,7 @@ export default function Header({
 
       {/* 2. BRAND & AD MASTHEAD */}
       <div className="bg-[#f3f7fb] bg-[url('/brand/masthead-editorial-pattern.svg')] bg-cover bg-center">
-      <div className="site-shell grid grid-cols-[minmax(92px,120px)_minmax(0,1fr)] items-center gap-1.5 py-1.5 sm:grid-cols-[minmax(110px,150px)_minmax(0,1fr)] sm:gap-4 sm:py-2 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)] lg:gap-8">
+      <div className="site-shell grid grid-cols-[minmax(92px,120px)_minmax(0,1fr)] items-center gap-1.5 py-1.5 sm:grid-cols-[minmax(108px,132px)_minmax(0,1fr)] sm:gap-1.5 sm:py-2 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)] lg:gap-8">
         <div className="flex min-w-0 justify-start">
           <Link
             href="/"
