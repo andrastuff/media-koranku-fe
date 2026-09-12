@@ -51,7 +51,7 @@ export default function SentilanCard({
             aspectRatio="landscape"
             href={href}
             sizes="112px"
-            className="bg-white"
+            className="!border-[#ecd3bb] !bg-[#fffaf2]"
           />
         </div>
       </div>
@@ -59,7 +59,7 @@ export default function SentilanCard({
       {/* Author Byline with Circular Avatar (The Guardian Style) */}
       <div className="pt-3.5 mt-3 border-t border-[#f0ded0] flex items-center space-x-3">
         {imgUrl ? (
-          <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-white shadow-xs shrink-0 bg-orange-200">
+          <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-[#ecd3bb] shadow-xs shrink-0 bg-[#fffaf2]">
             <SafeArticleImage
               src={imgUrl}
               alt={authorName}

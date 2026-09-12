@@ -52,7 +52,7 @@ export default function SentilanSpotlightCard({
       <div className="pt-2 border-t border-[#f0ded0] flex items-center justify-between">
         <div className="flex items-center space-x-2 min-w-0">
           {imgUrl ? (
-            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-orange-200 shrink-0 bg-orange-100">
+            <div className="relative w-8 h-8 rounded-full overflow-hidden border border-[#ecd3bb] shrink-0 bg-[#fffaf2]">
               <SafeArticleImage
                 src={imgUrl}
                 alt={authorName}

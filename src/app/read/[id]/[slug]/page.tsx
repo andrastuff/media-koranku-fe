@@ -234,7 +234,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
           {/* Main Featured Image */}
           {imgUrl && (
             <figure className="mb-6">
-              <ArticleImageFrame className="w-full aspect-video sm:aspect-[16/10]">
+              <ArticleImageFrame className={`w-full aspect-video sm:aspect-[16/10] ${isSentilan ? "!border-[#ecd3bb] !bg-[#fffaf2]" : ""}`}>
                 <SafeArticleImage
                   src={imgUrl}
                   fallbackSrc={articleImages.parentImageUrl}
