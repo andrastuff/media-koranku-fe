@@ -64,6 +64,9 @@ export default function HeroCarouselSection({
   const [paused, setPaused] = useState(false);
   const [reducedMotion, setReducedMotion] = useState(false);
 
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
+  const [touchStartY, setTouchStartY] = useState<number | null>(null);
+
   useEffect(() => {
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
     const updatePreference = () => setReducedMotion(preference.matches);
@@ -93,6 +96,32 @@ export default function HeroCarouselSection({
     setActiveIndex((current) => (current + direction + slides.length) % slides.length);
   };
 
+  const handleTouchStart = (e: React.TouchEvent) => {
+    setPaused(true);
+    setTouchStartX(e.touches[0].clientX);
+    setTouchStartY(e.touches[0].clientY);
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    setPaused(false);
+    if (touchStartX === null) return;
+    const touchEndX = e.changedTouches[0].clientX;
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaX = touchStartX - touchEndX;
+    const deltaY = touchStartY !== null ? Math.abs(touchStartY - touchEndY) : 0;
+
+    // Minimum swipe threshold 35px, and ensure horizontal intent
+    if (Math.abs(deltaX) > 35 && Math.abs(deltaX) > deltaY) {
+      if (deltaX > 0) {
+        move(1); // Swiped left -> next slide
+      } else {
+        move(-1); // Swiped right -> prev slide
+      }
+    }
+    setTouchStartX(null);
+    setTouchStartY(null);
+  };
+
   return (
     <section className="mb-5 rounded-sm border border-[#dcdcdc] bg-white p-3.5 shadow-2xs sm:p-4">
       <SectionHeader
@@ -105,13 +134,13 @@ export default function HeroCarouselSection({
       <div className="grid grid-cols-1 items-start gap-5 lg:grid-cols-12">
         <div className="min-w-0 lg:col-span-8 lg:border-r lg:border-[#dcdcdc] lg:pr-5">
           <div
-            className="relative"
+            className="relative touch-pan-y select-none"
             onMouseEnter={() => setPaused(true)}
             onMouseLeave={() => setPaused(false)}
             onFocus={() => setPaused(true)}
             onBlur={() => setPaused(false)}
-            onTouchStart={() => setPaused(true)}
-            onTouchEnd={() => setPaused(false)}
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
           >
             <article key={active.idart} className="hero-slide-enter group">
               <div className="mb-1.5 flex flex-wrap items-center gap-2">
@@ -121,8 +150,8 @@ export default function HeroCarouselSection({
                 {active.kabupaten && <span className="text-xs font-medium text-slate-500">• {active.kabupaten}</span>}
               </div>
 
-              <Link href={href}>
-                <h2 className="mb-3 font-serif text-2xl font-black leading-[1.12] tracking-tight text-slate-950 transition-colors group-hover:text-[#052962] sm:text-3xl lg:text-[2.15rem]">
+              <Link href={href} title={active.judul_artikel} className="block">
+                <h2 className="mb-3 font-serif text-2xl font-black leading-[1.12] tracking-tight text-slate-950 transition-colors group-hover:text-[#052962] sm:text-3xl lg:text-[2.15rem] truncate">
                   {active.judul_artikel}
                 </h2>
               </Link>

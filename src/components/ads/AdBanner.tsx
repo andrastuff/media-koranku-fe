@@ -38,7 +38,7 @@ export default function AdBanner({
     >
       {isCustomImage && ad?.img_url ? (
         // Custom advertiser banner uploaded via backend tbl_ads
-        <div className="relative w-full overflow-hidden rounded-xl border border-slate-200 bg-white shadow-2xs transition-transform hover:opacity-95">
+        <div className="relative w-full overflow-hidden rounded-xl border border-slate-200 bg-white p-1 shadow-2xs transition-transform hover:opacity-95">
           <a
             href={targetLink}
             target={isExternal ? "_blank" : undefined}
@@ -52,7 +52,7 @@ export default function AdBanner({
               height={250}
               unoptimized
               onError={() => setImageError(true)}
-              className="w-full h-auto max-h-56 object-cover rounded-xl"
+              className="w-full h-auto max-h-56 sm:max-h-64 object-contain rounded-lg mx-auto block"
             />
           </a>
         </div>
@@ -64,9 +64,9 @@ export default function AdBanner({
             {/* Left/Center: Circle Icon & Typography */}
             <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-5 text-center sm:text-left">
               {/* Vibrant Gradient Circle Icon with White Bars */}
-              <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#ec4899] via-[#fb923c] to-[#f43f5e] flex flex-col justify-center items-center shadow-xs shrink-0">
-                <div className="w-7 h-2 bg-white rounded-full mb-1.5" />
-                <div className="w-5 h-2 bg-white rounded-full mr-2" />
+              <div className="w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-gradient-to-br from-[#ec4899] via-[#fb923c] to-[#f43f5e] flex flex-col justify-center items-center shadow-xs shrink-0">
+                <div className="w-6 sm:w-7 h-1.5 sm:h-2 bg-white rounded-full mb-1 sm:mb-1.5" />
+                <div className="w-4 sm:w-5 h-1.5 sm:h-2 bg-white rounded-full mr-1.5 sm:mr-2" />
               </div>
 
               <div>
@@ -80,20 +80,20 @@ export default function AdBanner({
             </div>
 
             {/* Right: CTA Pill Button */}
-            <div className="shrink-0">
+            <div className="w-full sm:w-auto shrink-0 text-center">
               {isExternal ? (
                 <a
                   href={targetLink}
                   target="_blank"
                   rel="noopener noreferrer sponsored"
-                  className="inline-flex items-center justify-center px-6 py-2.5 sm:py-3 rounded-full bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Beriklan di korankuid
                 </a>
               ) : (
                 <Link
                   href={targetLink}
-                  className="inline-flex items-center justify-center px-6 py-2.5 sm:py-3 rounded-full bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="inline-flex items-center justify-center w-full sm:w-auto px-6 py-2.5 sm:py-3 rounded-full bg-brand-secondary hover:bg-brand-secondary-hover text-white font-bold text-xs sm:text-sm tracking-wide shadow-sm transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   Beriklan di korankuid
                 </Link>

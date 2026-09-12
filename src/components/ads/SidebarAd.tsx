@@ -20,11 +20,12 @@ export default function SidebarAd({ ad, fallbackSrc = "/ads/sidebar-ad-placehold
   const imageSrc = useFallback
     ? fallbackSrc
     : (ad?.img_url ?? fallbackSrc);
-  const safeLink = useFallback ? undefined : getSafeAdLink(ad?.link);
+  const safeLink = (useFallback ? undefined : getSafeAdLink(ad?.link)) || "/kontak";
+  const isExternal = safeLink.startsWith("http");
   const alt = ad?.keterangan?.trim() || "Space iklan korankuid";
 
   const content = (
-    <div className="relative mx-auto aspect-square w-full max-w-80 overflow-hidden rounded-md border border-slate-200 bg-slate-50 shadow-xs">
+    <div className="relative mx-auto aspect-square w-full max-w-sm sm:max-w-80 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-1 shadow-2xs">
       <Image
         src={imageSrc}
         alt={alt}
@@ -33,21 +34,19 @@ export default function SidebarAd({ ad, fallbackSrc = "/ads/sidebar-ad-placehold
         onError={() => {
           if (!useFallback && ad?.img_url) setFailedImageUrl(ad.img_url);
         }}
-        sizes="(max-width: 1024px) 80vw, 320px"
-        className="object-cover"
+        sizes="(max-width: 1024px) 90vw, 320px"
+        className="object-contain rounded-lg"
       />
     </div>
   );
 
-  if (!safeLink) return content;
-
   return (
     <a
       href={safeLink}
-      target={safeLink.startsWith("http") ? "_blank" : undefined}
-      rel={safeLink.startsWith("http") ? "noopener noreferrer sponsored" : undefined}
+      target={isExternal ? "_blank" : undefined}
+      rel={isExternal ? "noopener noreferrer sponsored" : undefined}
       aria-label={alt}
-      className="block transition-opacity hover:opacity-95"
+      className="block transition-opacity hover:opacity-95 my-4"
     >
       {content}
     </a>

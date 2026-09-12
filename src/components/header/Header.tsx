@@ -129,22 +129,22 @@ export default function Header({
 
       {/* 2. BRAND & AD MASTHEAD */}
       <div className="bg-[#f3f7fb] bg-[url('/brand/masthead-editorial-pattern.svg')] bg-cover bg-center">
-      <div className="site-shell grid grid-cols-[minmax(92px,120px)_minmax(0,1fr)] items-center gap-1.5 py-1.5 sm:grid-cols-[minmax(108px,132px)_minmax(0,1fr)] sm:gap-1.5 sm:py-2 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)] lg:gap-8">
-        <div className="flex min-w-0 justify-start">
+      <div className="site-shell grid grid-cols-[auto_minmax(0,1fr)] items-center gap-4 py-2 sm:gap-6 sm:py-2.5 md:py-3 lg:grid-cols-[minmax(280px,1fr)_minmax(480px,728px)] lg:gap-8">
+        <div className="flex min-w-0 shrink-0 justify-start">
           <Link
             href="/"
             aria-label="korankuid - Beranda"
-            className="inline-flex max-w-full transition-opacity hover:opacity-90"
+            className="inline-flex shrink-0 max-w-full transition-opacity hover:opacity-90"
           >
             <BrandLogo
               src={logoUrl}
               priority
-              className={logoUrl ? "h-20 max-w-full w-auto sm:h-24 md:h-28 lg:h-32" : "h-auto max-w-full w-[7.5rem] sm:w-36 lg:w-88"}
+              className={logoUrl ? "h-[92px] sm:h-22 md:h-24 lg:h-[104px] xl:h-[112px] max-w-full w-auto" : "h-auto max-w-full w-32 sm:w-36 lg:w-80 xl:w-88"}
             />
           </Link>
         </div>
 
-        <div className="min-w-0 w-full justify-self-end overflow-hidden rounded-sm">
+        <div className="min-w-0 w-full justify-self-start lg:justify-self-end overflow-hidden rounded-sm">
           <HeaderAd ad={headerAd} />
         </div>
       </div>
