@@ -15,7 +15,7 @@ import SidebarAd from "@/components/ads/SidebarAd";
 import ArticleInlineAd from "@/components/ads/ArticleInlineAd";
 import ArticleImageFrame from "@/components/ui/ArticleImageFrame";
 import ArticlePagination from "@/components/article/ArticlePagination";
-import { Clock, Eye, User, Tag, ChevronRight, FileText } from "lucide-react";
+import { Clock, Eye, User, Tag, ChevronRight, FileText, Quote } from "lucide-react";
 
 import { NewsArticleJsonLd, BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import type { Article } from "@/lib/types";
@@ -128,6 +128,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
   ]);
 
   const imgUrl = articleImages.imageUrl;
+  const isSentilan = article.kategori?.trim().toLowerCase() === "sentilan";
   const tagsList = article.tag ? article.tag.split(",").map((t) => t.trim()).filter(Boolean) : [];
 
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://korankuid.com";
@@ -176,10 +177,14 @@ export default async function ArticleDetailPage({ params }: PageProps) {
       </nav>
 
       {/* 2. ARTICLE HEADER */}
-      <header className="mb-6">
+      <header
+        className={`mb-6 ${isSentilan ? "relative overflow-hidden rounded-lg border border-[#efd9c5] bg-[#fff8ed] px-4 py-5 shadow-[0_8px_28px_rgba(111,62,26,0.07)] sm:px-7 sm:py-7" : ""}`}
+        style={isSentilan ? { backgroundImage: "url('/brand/sentilan-editorial-pattern.svg')", backgroundPosition: "right top", backgroundRepeat: "no-repeat", backgroundSize: "auto 100%" } : undefined}
+      >
         {/* Category & Region Kicker */}
-        <div className="flex items-center space-x-2 mb-3">
-          <span className="bg-[#cc0000] text-white text-xs font-black uppercase tracking-wider px-2.5 py-1 rounded-xs">
+        <div className="relative flex items-center space-x-2 mb-3">
+          {isSentilan && <Quote className="h-5 w-5 text-[#c74600]" aria-hidden="true" />}
+          <span className={`${isSentilan ? "border border-[#efc59e] bg-[#fff0dc] text-[#a83d08]" : "bg-[#cc0000] text-white"} rounded-xs px-2.5 py-1 text-xs font-black uppercase tracking-wider`}>
             {article.kategori || "Berita"}
           </span>
           {article.kabupaten && (
@@ -190,8 +195,8 @@ export default async function ArticleDetailPage({ params }: PageProps) {
         </div>
 
         {/* Title */}
-        <h1 className="font-serif text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight text-gray-950 mb-4">
-          {article.judul_artikel}
+        <h1 className={`relative font-serif text-2xl sm:text-4xl md:text-5xl font-black leading-tight tracking-tight mb-4 ${isSentilan ? "max-w-5xl text-[#342116]" : "text-gray-950"}`}>
+          {isSentilan ? <>&ldquo;{article.judul_artikel}&rdquo;</> : article.judul_artikel}
         </h1>
 
         {/* Byline and Metadata Bar */}
@@ -248,7 +253,7 @@ export default async function ArticleDetailPage({ params }: PageProps) {
 
           {/* ARTICLE CONTENT (WYSIWYG Compatibility Container) */}
           <div
-              className="article-content prose prose-lg max-w-none text-gray-800 font-sans"
+              className={`article-content prose prose-lg max-w-none text-gray-800 ${isSentilan ? "rounded-lg border border-[#f0dfcf] bg-[#fffbf4] px-4 py-5 font-serif shadow-[inset_4px_0_0_#c74600] sm:px-7 sm:py-6" : "font-sans"}`}
             dangerouslySetInnerHTML={{ __html: article.isi_artikel || "" }}
           />
 
